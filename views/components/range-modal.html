@@ -1,0 +1,49 @@
+<!-- Select range modal -->
+<div class="modal fade" id="range-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    Choose the range of the game
+                </h3>
+            </div>
+            <div class="modal-body d-flex justify-content-center">
+                <input type="range" id="slider-game-range">
+                <button id="select-range" class="btn btn-primary">Play</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    let graphMax = 30;
+    let init = Math.round(graphMax/2);
+
+    $("#slider-game-range").roundSlider({
+        min: 1,
+        max: graphMax,
+        radius: 100,
+        circleShape: "pie",
+        sliderType: "min-range",
+        value: init,
+        startAngle: 315
+    });
+
+    $("#select-range").click(function () {
+        $("#loading-range").show();
+        let gameRange = $('#slider-game-range').val();
+        let initValue = Math.round(gameRange/2);
+        console.log("range has been set to " + gameRange + " with init value " + initValue);
+
+        socket.emit('game_request', {pseudo: opponent.pseudo, socketId: opponent.socketId, range: gameRange});
+    })
+
+    socket.on('game_rejected', function () {
+        closeEveryModals();
+        console.log("game was rejected");
+    });
+</script>

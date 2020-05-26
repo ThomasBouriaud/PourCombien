@@ -1,0 +1,53 @@
+<!-- Pseudo Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">
+                    Information
+                </h3>
+            </div>
+            <div class="modal-body">
+                <form id="pseudo-form" action="#" class="needs-validation" novalidate>
+                    <div class="form-group">
+                        <label for="pseudo">
+                            Pseudo
+                        </label>
+                        <input type="text" class="form-control" id="pseudo" aria-describedby="emailHelp" placeholder="Enter a pseudo" required>
+                        <div class="invalid-feedback">
+                            Please enter a pseudo
+                        </div>
+                    </div>
+                    <button type="button" onclick="initPseudo();" class="btn btn-primary">Enter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    /** ASK FOR PSEUDO **/
+    $(window).on('load',function(){
+        $(document).ready(function() {
+            $(window).keydown(function(event){
+                if(event.keyCode === 13) {
+                    event.preventDefault();
+                    return false;
+                }
+            });
+        });
+        $('#myModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+    });
+
+    /** ON PSEUDO ENTERED **/
+    function initPseudo() {
+        $('#myModal').modal('hide');
+        myPseudo = $('#pseudo').val();
+        $('#insert-pseudo').text(myPseudo);
+
+        socket.emit('join', {pseudo: myPseudo});
+    }
+</script>

@@ -1,0 +1,49 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+
+    <script>
+        let myPseudo = "";
+        let opponent = {};
+
+        let yourNumber = -1;
+        let opponentNumber = -1;
+
+        let playing = false;
+
+        let address = "localhost";
+        let port = "3000";
+        let socket = new io.connect('http://' + address + ':' + port);
+
+        socket.on('connect', function () {
+            // removing every people connected
+            $("#people-connected").empty();
+        });
+
+        // $(document).ready(function () {
+            function closeEveryModals() {
+                $('#confirm-game').modal('hide');
+                $('#number-modal').modal('hide');
+                $('#myModal').modal('hide');
+                $('#range-modal').modal('hide');
+                $('#result-modal').modal('hide');
+            }
+        // });
+
+    </script>
+
+    {% include 'components/pseudo-modal.html' %}
+
+    {% include 'components/connected-people.html' %}
+
+    {% include 'components/game-modal.html' %}
+
+    {% include 'components/confirm-game.html' %}
+
+    {% include 'components/range-modal.html' %}
+
+    {% include 'components/reject-modal.html' %}
+
+    {% include 'components/result.html' %}
+
+{% endblock %}

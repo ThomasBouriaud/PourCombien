@@ -1,0 +1,36 @@
+<h1>Welcome <span id="insert-pseudo"></span>&nbsp;!</h1>
+<div class="col-12" style="margin-left: 30px;">
+    <h3>Here is the list of people you can play with&nbsp;:</h3>
+    <ul id="people-connected" class="list-group col-12 col-sm-8 col-md-6 col-lg-4">
+    </ul>
+</div>
+
+
+
+<script>
+    /** add a new user **/
+    socket.on('add_people', function ({pseudo, socketId}) {
+        console.log(pseudo + " was added");
+
+        $("#people-connected").append(
+            `<li id="${pseudo}-${socketId}" class="list-group-item">
+                ${pseudo}
+                <button type="button" onclick="playWith({pseudo: '${pseudo}', socketId: '${socketId}'})" class="btn btn-default" style="margin-left: 15px; float: right;margin-top: -7px;">
+                <span class="glyphicon glyphicon-menu-right"></span>
+                </button>
+                </li>`);
+    });
+
+    /** remove a user **/
+    socket.on('remove_people', function ({pseudo, socketId}) {
+        console.log(pseudo + " was removed");
+        $("#" + pseudo + "-" + socketId).remove();
+    });
+
+    function playWith({pseudo, socketId}) {
+        console.log("You asked to play with " + pseudo);
+        opponent = {pseudo, socketId};
+
+        $('#range-modal').modal();
+    }
+</script>

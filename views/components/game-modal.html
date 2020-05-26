@@ -1,0 +1,58 @@
+<!-- Game Modal -->
+<div class="modal fade" id="number-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    Choose the number to play
+                </h3>
+            </div>
+            <div id="game-body" class="modal-body d-flex justify-content-center">
+                <input type="range" id="slider-game-number">
+                <button id="choose-number" class="btn btn-primary">Play</button>
+            </div>
+            <button id="game-loading" class="btn btn-primary" type="button" disabled hidden>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Loading...
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $("#choose-number").click(function () {
+        yourNumber = $('#slider-game-number').val();
+        $('#game-body').hide();
+        $('#game-loading').show();
+        socket.emit('ready', {number: yourNumber});
+        console.log("You chose the number " + yourNumber);
+    })
+
+    socket.on('play', function ({range}) {
+        closeEveryModals();
+        let initValue = Math.round(range/2);
+
+        $('#game-loading').hide();
+        $('#game-body').show();
+
+        $("#slider-game-number").roundSlider({
+            min: 1,
+            max: range,
+            radius: 100,
+            circleShape: "pie",
+            sliderType: "min-range",
+            value: initValue,
+            startAngle: 315
+        });
+
+        $('#number-modal').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+    });
+
+    socket.on('opponent_ready', function () {
+        console.log("opponent ready !");
+    })
+</script>

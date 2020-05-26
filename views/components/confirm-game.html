@@ -1,0 +1,46 @@
+<div class="modal fade" id="confirm-game" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"><span id="opponent-pseudo"></span> wants to do game on <span
+                        id="game-value"></span></h4>
+            </div>
+
+            <div class="modal-footer">
+                <button id="accept-game" type="button" class="btn btn-success btn-default" data-dismiss="modal">Accept</button>
+                <button id="reject-game" type="button" class="btn btn-danger btn-default" data-dismiss="modal">Deny</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $("#accept-game").click(function () {
+        playing = true;
+        socket.emit('game_accepted', {pseudo: opponent.pseudo, socketId: opponent.socketId, range: opponent.range});
+    })
+
+    $("#reject-game").click(function () {
+        playing = false;
+        socket.emit('game_rejected', {pseudo: opponent.pseudo, socketId: opponent.socketId});
+    })
+
+    socket.on('game_request', function ({pseudo, socketId, range}) {
+        if (!playing) {
+            closeEveryModals();
+            opponent = {pseudo, socketId, range};
+            console.log(pseudo + " proposed a game with range " + range);
+
+            $('#opponent-pseudo').text(pseudo);
+            $('#game-value').text(range);
+
+            $('#confirm-game').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
+        }
+    });
+</script>

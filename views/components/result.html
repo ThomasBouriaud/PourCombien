@@ -1,0 +1,36 @@
+<!-- Pseudo Modal -->
+<div class="modal fade" id="result-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">
+                    Results
+                </h3>
+            </div>
+
+            <div class="modal-body">
+                <h3>You played the number <span id="result-your-value"></span></h3>
+                <h3><span id="result-opponent-pseudo"></span> played <span id="result-opponent-value"></span></h3>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    socket.on('print', function ({number}) {
+        closeEveryModals();
+        playing = false;
+        console.log("Your opponent played " + number);
+
+        $('#result-your-value').text(yourNumber);
+        $('#result-opponent-pseudo').text(opponent.pseudo);
+        $('#result-opponent-value').text(number);
+
+        $('#result-modal').modal()
+    })
+</script>
