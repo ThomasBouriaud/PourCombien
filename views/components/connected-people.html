@@ -38,6 +38,8 @@
         console.log("You asked to play with " + pseudo);
         opponent = {pseudo, socketId};
 
+        $("#range-div").show();
+        $("#range-loading").hide();
         $('#range-modal').modal();
     }
 </script>
