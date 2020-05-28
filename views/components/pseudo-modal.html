@@ -25,6 +25,12 @@
     </div>
 </div>
 
+<style>
+    #pseudo-error {
+        color: red;
+    }
+</style>
+
 <script>
     /** ASK FOR PSEUDO **/
     $(window).on('load',function(){
@@ -44,10 +50,16 @@
 
     /** ON PSEUDO ENTERED **/
     function initPseudo() {
-        $('#myModal').modal('hide');
-        myPseudo = $('#pseudo').val();
-        $('#insert-pseudo').text(myPseudo);
+        var form = $("#pseudo-form");
 
-        socket.emit('join', {pseudo: myPseudo});
+        if(form.valid()) {
+            form.validate();
+            $('#myModal').modal('hide');
+            myPseudo = $('#pseudo').val();
+            $('#insert-pseudo').text(myPseudo);
+
+            socket.emit('join', {pseudo: myPseudo});
+        }
+
     }
 </script>

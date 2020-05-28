@@ -8,8 +8,14 @@
                 </h3>
             </div>
             <div class="modal-body d-flex justify-content-center">
+                <div id="range-div">
                 <input type="range" id="slider-game-range">
                 <button id="select-range" class="btn btn-primary">Play</button>
+                </div>
+                <button id="range-loading" class="btn btn-primary" type="button" disabled hidden>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Loading...
+                </button>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger btn-default" data-dismiss="modal">Close</button>
@@ -34,9 +40,10 @@
     });
 
     $("#select-range").click(function () {
-        $("#loading-range").show();
         let gameRange = $('#slider-game-range').val();
         let initValue = Math.round(gameRange/2);
+        $("#range-div").hide();
+        $("#range-loading").show();
         console.log("range has been set to " + gameRange + " with init value " + initValue);
 
         socket.emit('game_request', {pseudo: opponent.pseudo, socketId: opponent.socketId, range: gameRange});

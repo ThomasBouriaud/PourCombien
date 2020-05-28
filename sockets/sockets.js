@@ -99,8 +99,8 @@ let sockets = function (server) {
             let opponent = current_user[0].opponent;
 
             if(current_user[0].ready && opponent.ready) {
-                io.to(current_user[0].socketId).emit('print', {number: opponent.number});
-                io.to(opponent.socketId).emit('print', {number: current_user[0].number});
+                io.to(current_user[0].socketId).emit('print', {pseudo: opponent.pseudo, number: opponent.number});
+                io.to(opponent.socketId).emit('print', {pseudo: current_user[0].pseudo, number: current_user[0].number});
 
                 current_user[0].ready = false;
                 opponent.ready = false;

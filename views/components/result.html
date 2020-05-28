@@ -22,14 +22,14 @@
 </div>
 
 <script>
-    socket.on('print', function ({number}) {
+    socket.on('print', function ({pseudo, number}) {
         closeEveryModals();
         playing = false;
         opponent = null;
         console.log("Your opponent played " + number);
 
         $('#result-your-value').text(yourNumber);
-        $('#result-opponent-pseudo').text(opponent.pseudo);
+        $('#result-opponent-pseudo').text(pseudo);
         $('#result-opponent-value').text(number);
 
         $('#result-modal').modal()
