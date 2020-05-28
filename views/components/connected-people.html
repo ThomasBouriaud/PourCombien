@@ -27,10 +27,12 @@
         $("#" + pseudo + "-" + socketId).remove();
 
         // cancel game if the player is the opponent
-        if(opponent.pseudo === pseudo && opponent.socketId === socketId) {
-            console.log("game cancelled");
-            closeEveryModals();
-            $("#game-cancelled-modal").modal();
+        if(opponent !== null) {
+            if (opponent.pseudo === pseudo && opponent.socketId === socketId) {
+                console.log("game cancelled");
+                closeEveryModals();
+                $("#game-cancelled-modal").modal();
+            }
         }
     });
 
