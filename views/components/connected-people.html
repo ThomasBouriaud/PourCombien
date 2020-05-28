@@ -25,6 +25,13 @@
     socket.on('remove_people', function ({pseudo, socketId}) {
         console.log(pseudo + " was removed");
         $("#" + pseudo + "-" + socketId).remove();
+
+        // cancel game if the player is the opponent
+        if(opponent.pseudo === pseudo && opponent.socketId === socketId) {
+            console.log("game cancelled");
+            closeEveryModals();
+            $("#game-cancelled-modal").modal();
+        }
     });
 
     function playWith({pseudo, socketId}) {

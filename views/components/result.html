@@ -25,6 +25,7 @@
     socket.on('print', function ({number}) {
         closeEveryModals();
         playing = false;
+        opponent = null;
         console.log("Your opponent played " + number);
 
         $('#result-your-value').text(yourNumber);
